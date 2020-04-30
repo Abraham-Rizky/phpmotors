@@ -147,6 +147,10 @@ footer hr{
     padding: 20px 2%;
 }
 
+.padding500{
+    padding: 0 10px;
+}
+
 /* Blue button on landing page */
 @media screen and (min-width:550px){
     #landing-page a{

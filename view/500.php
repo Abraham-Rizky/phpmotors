@@ -16,8 +16,9 @@
             <?php include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/common/nav.php'; ?>
         </nav>
         <main>
-            <section>
-                <h1>Content Title Here</h1>
+            <section class="padding500">
+                <h1>Server Error</h1>
+                <p>Sorry our server seems to be experiencing some technical difficulties. Please check back later.</p>
             </section>
         </main>
         <footer>
