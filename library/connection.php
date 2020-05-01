@@ -1,7 +1,7 @@
 <?php
 function phpmotorsConnect(){
  $server = 'localhost';
- $dbname= 'phpmotorsd';
+ $dbname= 'phpmotors';
  $username = 'iClient';
  $password = '5qIFlYfhWVQMtYzB'; 
  $dsn = "mysql:host=$server;dbname=$dbname";
