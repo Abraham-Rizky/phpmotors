@@ -12,7 +12,7 @@ header div{
     margin-right: 10%;
 }
 
-#menu{
+nav ul{
     background-color: #3a3a3a;
     list-style: none;
     display: flex;
@@ -30,18 +30,18 @@ nav a:link, nav a:visited{
 }
 
 nav a:hover{
-    color: black;
+    color: #4C96D7;
     font-weight: 600;
     transition: none;
 }
 
-nav li:hover{
+/* nav li:hover{
     background-color: #4C96D7;
     padding: 20px 0%;
-}
+} */
 
 nav a:active{
-    border-top: 5px solid #A6CBEB;
+    border-top: 5px solid #4C96D7;
 }
 
 footer p{
@@ -51,6 +51,28 @@ footer p{
 
 footer hr{
     border: 2px solid #3a3a3a;
+}
+
+label, input{
+    display: block;
+}
+
+input{
+    margin-bottom: 15px;
+}
+
+form, #notamember{
+    padding: 0 15px;
+}
+
+#warning{
+    color: red;
+    padding-left: 15px;
+}
+/* My account link on header */
+#account{
+    text-decoration: none;
+    margin: 0% 15px;
 }
 
 /* Main page CSS */
@@ -143,7 +165,7 @@ footer hr{
     margin-top: 0;
 }
 
-#menu li{
+nav ul li{
     padding: 20px 2%;
 }
 
@@ -189,7 +211,7 @@ footer hr{
 }
 /* Media query for large screen */
 @media screen and (min-width: 1366px){
-    #menu{
+    nav ul{
         justify-content: flex-start;
     }
 }
