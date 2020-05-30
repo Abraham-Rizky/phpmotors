@@ -17,8 +17,12 @@
             <?php echo $navList; ?>
         </nav>
         <main>
-            <section>
-                <h1>Content Title Here</h1>
+            <section class="paddingleftright">
+                <h1>Vehicle Management</h1>
+                <ul>
+                    <li><a class="block" href="/phpmotors/vehicles/?action=addclassification">Add Classification</a></li>
+                    <li><a class="block" href="/phpmotors/vehicles/?action=addvehicle">Add Vehicle</a></li>
+                </ul>             
             </section>
         </main>
         <footer>

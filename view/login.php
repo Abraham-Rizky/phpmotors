@@ -37,7 +37,7 @@
                             <input type="submit" name="Submit" value="Login">
                         </div>
                 </form>  
-                <a id='notamember' href="/phpmotors/accounts/?action=deliverRegisterView">Not a member yet?</a>          
+                <a id='notamember' href="/phpmotors/accounts/?action=newmember">Not a member yet?</a>          
             </section>
         </main>
         <footer>

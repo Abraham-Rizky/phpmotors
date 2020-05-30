@@ -24,7 +24,8 @@ $navList .= '</ul>';
 
 
 //Build a dropdown menu
-$dropdown = '<select>';
+$dropdown = '<select name="classificationId" id="classificationId">';
+$dropdown .= "<option value='' disabled hidden selected>Choose Car Classification</option>";
 foreach ($classifications as $classification) {
 $dropdown .= "<option value='".urlencode($classification['classificationId'])."'>$classification[classificationName]</option>";
 }
@@ -40,12 +41,82 @@ $action = filter_input(INPUT_POST, 'action');
 
 // Switch case to control vehicle management
 switch ($action){
-  case 'addVehicle':
+  case 'addclassification':
+    include '../view/add-classification.php';
+  break;
+
+  case 'addvehicle':
     include '../view/add-vehicle.php';
   break;
 
   case 'addClassification':
-    include '../view/add-classification.php';
+    // Filter and store the data
+    $classificationName = filter_input(INPUT_POST, 'classificationName');
+
+    
+    // Check for missing data
+    if(empty($classificationName)){
+      $message = '<p id="warning">Please enter a classification name.</p>';
+      include '../view/add-classification.php';
+      exit; 
+    }
+    // Send the data to the model
+    $checkClass = checkClassification($classificationName);
+
+    // Check and report the result
+    if($checkClass == 1){
+      $message = "<p id=\"warning\">Sorry! '$classificationName' classification already exists. Please enter another classification name.</p>";
+      include '../view/add-classification.php';
+      exit;
+    }else{
+      $addClass = addClassification($classificationName);
+      $checkClass = 0;
+      if($addClass == 1){
+        header ('Location: /phpmotors/vehicles/');
+        exit;
+      }else{
+        $message = "<p id=\"warning\">Sorry the registration failed. Please try again.</p>";
+        include '../view/add-classification.php';
+        exit;
+      }
+
+    }
+  break;
+
+  case 'addVehicle':
+
+      // Filter and store the data
+      // $classificationId = 3;
+      $invMake = filter_input(INPUT_POST, 'invMake');
+      $invModel = filter_input(INPUT_POST, 'invModel');
+      $invDescription = filter_input(INPUT_POST, 'invDescription');
+      $invImage = filter_input(INPUT_POST, 'invImage');
+      $invThumbnail = filter_input(INPUT_POST, 'invThumbnail');
+      $invPrice = filter_input(INPUT_POST, 'invPrice');
+      $invStock = filter_input(INPUT_POST, 'invStock');
+      $invColor = filter_input(INPUT_POST, 'invColor');
+      $classificationId = filter_input(INPUT_POST, 'classificationId');
+
+      // Check for missing data
+      if(empty($invMake) || empty($invModel) || empty($invDescription)  || empty($invImage) || empty($invThumbnail) || empty($invStock) || empty($invPrice) || empty($invColor)){
+        $message = '<p id="warning">Please provide information for all empty form fields.</p>';
+        include '../view/add-vehicle.php';
+        exit; 
+      }
+      // Send the data to the model
+      $addCar = addCar($invMake, $invModel, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $classificationId);
+
+      // Check and report the result
+      if($addCar === 1){
+        $message = "<p>The $invMake $invModel was added successfully!</p>";
+        // header ('Location: /phpmotors/vehicles/?action=addvehicle');
+        include '../view/add-vehicle.php';
+        exit;
+      } else {
+        $message = '<p id="warning">Sorry the insertion is failed. Please try again.</p>';
+        include '../view/add-vehicle.php';
+        exit;
+      }  
   break;
 
   default:

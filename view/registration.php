@@ -44,7 +44,7 @@
                         </div>
                         <div>
                             <input type="submit" name="submit" id="regbtn" value="Register">
-                            <input type="hidden" name="action" value="register"
+                            <input type="hidden" name="action" value="register">
                         </div>
                 </form>  
             </section>        

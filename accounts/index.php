@@ -61,11 +61,11 @@ switch ($action){
       // echo 'You are in the register case statement.';
     break;
     
-    case 'deliverRegisterView':
+    case 'newmember':
       include '../view/registration.php';
     break;
     
-    case 'deliverLoginView':
+    case 'Login':
       include '../view/login.php';
     break;
 
