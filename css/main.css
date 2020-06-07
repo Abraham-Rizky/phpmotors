@@ -6,6 +6,15 @@ header{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+}
+
+header span{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0px 15px;
+    margin-bottom: -12px;
 }
 
 header div{
@@ -86,6 +95,9 @@ select{
     margin: 15px 0%;
 }
 
+#regbtn{
+    margin-top: 15px;;
+}
 /* My account link on header */
 #account{
     text-decoration: none;
@@ -224,6 +236,13 @@ nav ul li{
         align-items: flex-start;
     }
 
+    header{
+        position: static;
+    }
+
+    header span{
+        position: static;
+    }
 
 }
 /* Media query for large screen */

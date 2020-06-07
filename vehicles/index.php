@@ -1,35 +1,41 @@
 <?php
 // Vehicles controller
 
+// Create or access a Session
+session_start();
+
 // Get the database connection file
 require_once '../library/connections.php';
 // Get the PHP Motors model for use as needed
 require_once '../model/main-model.php';
 // Get the accounts model
 require_once '../model/vehicles-model.php';
+// Get the functions library
+require_once '../library/functions.php';
+
 
 // Get the array of classifications
 $classifications = getClassifications();
-
+// Build a navigation bar using the $classifications array
+$navList = buildNavigation($classifications);
 // var_dump($classifications);
 // 	exit;
 
 // Build a navigation bar using the $classifications array
-$navList = '<ul>';
-$navList .= "<li><a href='/phpmotors/index.php' title='View the PHP Motors home page'>Home</a></li>";
-foreach ($classifications as $classification) {
- $navList .= "<li><a href='/phpmotors/index.php?action=".urlencode($classification['classificationName'])."' title='View our $classification[classificationName] product line'>$classification[classificationName]</a></li>";
-}
-$navList .= '</ul>';
-
+// $navList = '<ul>';
+// $navList .= "<li><a href='/phpmotors/index.php' title='View the PHP Motors home page'>Home</a></li>";
+// foreach ($classifications as $classification) {
+//  $navList .= "<li><a href='/phpmotors/index.php?action=".urlencode($classification['classificationName'])."' title='View our $classification[classificationName] product line'>$classification[classificationName]</a></li>";
+// }
+// $navList .= '</ul>';
 
 //Build a dropdown menu
-$dropdown = '<select name="classificationId" id="classificationId">';
-$dropdown .= "<option value='' disabled hidden selected>Choose Car Classification</option>";
-foreach ($classifications as $classification) {
-$dropdown .= "<option value='".urlencode($classification['classificationId'])."'>$classification[classificationName]</option>";
-}
-$dropdown .= '</select>';
+// $dropdown = '<select name="classificationId" id="classificationId">';
+// $dropdown .= "<option value='' disabled hidden selected>Choose Car Classification</option>";
+// foreach ($classifications as $classification) {
+// $dropdown .= "<option value='".urlencode($classification['classificationId'])."'>$classification[classificationName]</option>";
+// }
+// $dropdown .= '</select>';
 
 // echo $navList;
 // exit;
@@ -51,7 +57,7 @@ switch ($action){
 
   case 'addClassification':
     // Filter and store the data
-    $classificationName = filter_input(INPUT_POST, 'classificationName');
+    $classificationName = filter_input(INPUT_POST, 'classificationName', FILTER_SANITIZE_STRING);
 
     
     // Check for missing data
@@ -87,15 +93,15 @@ switch ($action){
 
       // Filter and store the data
       // $classificationId = 3;
-      $invMake = filter_input(INPUT_POST, 'invMake');
-      $invModel = filter_input(INPUT_POST, 'invModel');
-      $invDescription = filter_input(INPUT_POST, 'invDescription');
-      $invImage = filter_input(INPUT_POST, 'invImage');
-      $invThumbnail = filter_input(INPUT_POST, 'invThumbnail');
-      $invPrice = filter_input(INPUT_POST, 'invPrice');
-      $invStock = filter_input(INPUT_POST, 'invStock');
-      $invColor = filter_input(INPUT_POST, 'invColor');
-      $classificationId = filter_input(INPUT_POST, 'classificationId');
+      $invMake = filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_STRING);
+      $invModel = filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_STRING);
+      $invDescription = filter_input(INPUT_POST, 'invDescription', FILTER_SANITIZE_STRING);
+      $invImage = filter_input(INPUT_POST, 'invImage', FILTER_SANITIZE_STRING);
+      $invThumbnail = filter_input(INPUT_POST, 'invThumbnail', FILTER_SANITIZE_STRING);
+      $invPrice = filter_input(INPUT_POST, 'invPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+      $invStock = filter_input(INPUT_POST, 'invStock', FILTER_SANITIZE_NUMBER_INT);
+      $invColor = filter_input(INPUT_POST, 'invColor', FILTER_SANITIZE_STRING);
+      $classificationId = filter_input(INPUT_POST, 'classificationId', FILTER_SANITIZE_NUMBER_INT);
 
       // Check for missing data
       if(empty($invMake) || empty($invModel) || empty($invDescription)  || empty($invImage) || empty($invThumbnail) || empty($invStock) || empty($invPrice) || empty($invColor)){

@@ -26,7 +26,7 @@
                 ?>
                 <form action="/phpmotors/vehicles/" method="post">
                     <label for="classificationName">Classification Name</label>
-                    <input type="text" name="classificationName" id="classificationName" placeholder="Enter Name Here" autofocus autocomplete="off">
+                    <input type="text" name="classificationName" id="classificationName" placeholder="Enter Name Here" autofocus autocomplete="off" required>
                     <input type="submit" name="Submit" value="Add Classification">
                     <input type="hidden" name="action" value="addClassification">
                 </form>

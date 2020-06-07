@@ -23,18 +23,19 @@
                     echo $message;
                     }
                 ?>
-                <form action="/phpmotors/accounts/?action=Login" method="post">
+                <form action="/phpmotors/accounts/" method="post">
                         <h1>Sign In</h1>
                         <div>
                             <label for="clientEmail">Email</label>
-                            <input type="email" name="clientEmail" id="clientEmail" placeholder="Your Email" required autofocus autocomplete="off">
+                            <input type="email" name="clientEmail" id="clientEmail" placeholder="Your Email" autofocus autocomplete="off" <?php if(isset($clientEmail)){echo "value='$clientEmail'";} ?> required>
                         </div>
                         <div>
                             <label for="clientPassword">Password</label>
-                            <input type="password" name="clientPassword" id="clientPassword" placeholder="Your Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required autocomplete="off">
-                        </div>
+                            <input type="password" name="clientPassword" id="clientPassword" placeholder="Your Password" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" autocomplete="off" required>
+                            <span>*Passwords must be at least 8 characters and contain at least 1 number, 1 capital letter and 1 special character</span> </div>
                         <div>
                             <input type="submit" name="Submit" value="Login">
+                            <input type="hidden" name="action" value="Login">
                         </div>
                 </form>  
                 <a id='notamember' href="/phpmotors/accounts/?action=newmember">Not a member yet?</a>          
