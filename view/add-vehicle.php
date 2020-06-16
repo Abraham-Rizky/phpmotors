@@ -1,4 +1,11 @@
 <?php
+
+if ($_SESSION['clientData']['clientLevel'] < 2) {
+    header('location: /phpmotors/');
+    exit;
+   }
+
+?><?php
 //Build a dropdown menu
     $dropdown = '<select name="classificationId" id="classificationId">';
     $dropdown .= "<option value='' disabled hidden selected>Choose Car Classification</option>";

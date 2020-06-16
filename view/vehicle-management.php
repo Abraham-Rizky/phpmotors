@@ -1,4 +1,15 @@
-<!doctype html>
+<?php
+
+if ($_SESSION['clientData']['clientLevel'] < 2) {
+    header('location: /phpmotors/');
+    exit;
+   }
+
+if (isset($_SESSION['message'])) {
+$message = $_SESSION['message'];
+}   
+
+?><!doctype html>
 <html lang="en">
     <head>
         <title>PHP Motors</title>
@@ -24,9 +35,24 @@
                     <li><a class="block" href="/phpmotors/vehicles/?action=addvehicle">Add Vehicle</a></li>
                 </ul>             
             </section>
+            <?php
+                if (isset($message)) { 
+                    echo $message; 
+                } 
+                if (isset($classificationList)) { 
+                    echo '<h2 class="paddingleftright">Vehicles By Classification</h2>'; 
+                    echo '<p class="paddingleftright">Choose a classification to see those vehicles</p>'; 
+                    echo $classificationList; 
+                }
+            ?>
+            <noscript>
+            <p><strong>JavaScript Must Be Enabled to Use this Page.</strong></p>
+            </noscript>
+            <table id="inventoryDisplay"></table>
         </main>
         <footer>
             <?php include $_SERVER['DOCUMENT_ROOT'] . '/phpmotors/common/footer.php'; ?>
         </footer>
+        <script src="../js/inventory.js"></script>
     </body>
-</html>
+</html><?php unset($_SESSION['message']); ?>
