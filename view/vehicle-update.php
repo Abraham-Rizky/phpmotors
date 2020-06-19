@@ -13,7 +13,7 @@ foreach ($classifications as $classification) {
  $dropdown .= "<option value='$classification[classificationId]'";
  if(isset($classificationId)){
   if($classification['classificationId'] === $classificationId){
-   $classifList .= ' selected ';
+   $dropdown .= ' selected ';
   }
  } elseif(isset($invInfo['classificationId'])){
  if($classification['classificationId'] === $invInfo['classificationId']){
@@ -82,7 +82,7 @@ $dropdown .= '</select>';
                     <input type="text" name="invColor" id="invColor" required <?php if(isset($invColor)){ echo "value='$invColor'"; } elseif(isset($invInfo['invColor'])) {echo "value='$invInfo[invColor]'"; }?>>
                     <input type="submit" name="Submit" value="Update Vehicle">
                     <input type="hidden" name="action" value="updateVehicle">
-                    <input type="hidden" name="invId" value="<?php if(isset($invInfo['invId'])){ echo $invInfo['invId'];}elseif(isset($invId)){ echo $invId; } ?>">
+                    <input type="hidden" name="invId" value='<?php if(isset($invInfo['invId'])){ echo $invInfo['invId'];}elseif(isset($invId)){ echo $invId; } ?>'>
                 </form>
             </section>
         </main>

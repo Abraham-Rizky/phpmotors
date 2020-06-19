@@ -109,7 +109,7 @@ switch ($action){
       $classificationId = filter_input(INPUT_POST, 'classificationId', FILTER_SANITIZE_NUMBER_INT);
 
       // Check for missing data
-      if(empty($invMake) || empty($invModel) || empty($invDescription)  || empty($invImage) || empty($invThumbnail) || empty($invStock) || empty($invPrice) || empty($invColor)){
+      if(empty($invMake) || empty($invModel) || empty($invDescription)  || empty($invImage) || empty($invThumbnail) || empty($invStock) || empty($invPrice) || empty($invColor) || empty($classificationId)){
         $message = '<p id="warning">Please provide information for all empty form fields.</p>';
         include '../view/add-vehicle.php';
         exit; 
@@ -119,7 +119,7 @@ switch ($action){
 
       // Check and report the result
       if($addCar === 1){
-        $message = "<p>The $invMake $invModel was added successfully!</p>";
+        $message = "<p id='success'>The $invMake $invModel was added successfully!</p>";
         // header ('Location: /phpmotors/vehicles/?action=addvehicle');
         include '../view/add-vehicle.php';
         exit;
@@ -171,16 +171,46 @@ switch ($action){
   exit;
   }
 
-  $updateResult = updateVehicle($classificationId, $invMake, $invModel, $invDescription, $invImage, $invThumbnail, $invPrice, $invStock, $invColor, $invId);
+  $updateResult = updateVehicle($invMake, $invModel, $invDescription, $invImage,  $invThumbnail, $invPrice, $invStock, $invColor, $classificationId, $invId);
   if ($updateResult) {
-  $message = "<p class='notice'>Congratulations, the $invMake $invModel was successfully updated.</p>";
+  $message = "<p id='success'>Congratulations, the $invMake $invModel was successfully updated.</p>";
     $_SESSION['message'] = $message;
     header('location: /phpmotors/vehicles/');
     exit;
   } else {
-    $message = "<p class='notice'>Error. the $invMake $invModel was not updated.</p>";
+    $message = "<p id='warning'>Error. the $invMake $invModel was not updated.</p>";
     include '../view/vehicle-update.php';
     exit;
+    }
+  break;
+
+  case 'del':
+    $invId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+    $invInfo = getInvItemInfo($invId);
+    if (count($invInfo) < 1) {
+        $message = 'Sorry, no vehicle information could be found.';
+      }
+      include '../view/vehicle-delete.php';
+      exit;
+  break;
+
+  case 'deleteVehicle':
+    $invMake = filter_input(INPUT_POST, 'invMake', FILTER_SANITIZE_STRING);
+    $invModel = filter_input(INPUT_POST, 'invModel', FILTER_SANITIZE_STRING);
+    $invId = filter_input(INPUT_POST, 'invId', FILTER_SANITIZE_NUMBER_INT);
+    
+    $deleteResult = deleteVehicle($invId);
+    if ($deleteResult) {
+      $message = "<p id='warning'>Congratulations the, $invMake $invModel was	successfully deleted.</p>";
+      $_SESSION['message'] = $message;
+      header('location: /phpmotors/vehicles/');
+      exit;
+    } else {
+      $message = "<p class='notice'>Error: $invMake $invModel was not
+    deleted.</p>";
+      $_SESSION['message'] = $message;
+      header('location: /phpmotors/vehicles/');
+      exit;
     }
   break;
 

@@ -2,11 +2,11 @@
 if(!$_SESSION['loggedin']){
     header('Location: /phpmotors/');
   } 
-
-  if(isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-  }
   
+  if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    } 
+
   $clientFirstname = $_SESSION['clientData']['clientFirstname'];
   $clientLastname = $_SESSION['clientData']['clientLastname'];
   $clientEmail = $_SESSION['clientData']['clientEmail'];
@@ -33,18 +33,24 @@ if(!$_SESSION['loggedin']){
         <main>
             <section class="paddingleftright">
                 <h1><?php echo "$clientFirstname $clientLastname";?></h1>
+                <?php if (isset($message)) {echo $message;} ?>
                 <p>You are logged in.</p>
                 <ul>
                     <li>First Name: <?php echo $clientFirstname; ?></li>
                     <li>Last Name: <?php echo $clientLastname; ?></li>
                     <li>Email: <?php echo $clientEmail; ?></li>
-                    <li>Client Level: <?php echo $clientLevel; ?></li>
                 </ul>
                 <?php
-                    if($clientLevel > 1){
+                    if($_SESSION['loggedin']){
                         echo '<h2>Account Management</h2>';
                         echo '<p>Use this link to update account information</p>';
-                        echo '<p><a href="/phpmotors/vehicles/">Vehicle Management</a></p>';
+                        echo '<p><a href="/phpmotors/accounts/?action=updateaccount" title="Update your account information">Update Account Information</a></p>';
+
+                    }
+                    if($clientLevel > 1){
+                        echo '<h2>Inventory Management</h2>';
+                        echo '<p>Use this link to manage the inventory</p>';
+                        echo '<p><a href="/phpmotors/vehicles/" title="Link to Vehicle Management">Vehicle Management</a></p>';
                     }
                 ?>
             </section>

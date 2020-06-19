@@ -145,6 +145,96 @@ switch ($action){
       header ('Location: /phpmotors/');
     break;
 
+    
+    case 'updateaccount':
+      include '../view/client-update.php';
+    break;
+
+    case 'updateAccount':
+      $clientFirstname = filter_input(INPUT_POST, 'clientFirstname', FILTER_SANITIZE_STRING);
+      $clientLastname = filter_input(INPUT_POST, 'clientLastname', FILTER_SANITIZE_STRING);
+      $clientEmail = filter_input(INPUT_POST, 'clientEmail', FILTER_SANITIZE_EMAIL);
+      $clientEmail = checkEmail($clientEmail);
+      $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
+      $clientEmail = checkEmail($clientEmail);
+
+      
+      if($clientEmail != $_SESSION['clientData']['clientEmail']){
+        $existingEmail = checkExistingEmail($clientEmail);
+        // Check for existing email address in the table
+        if($existingEmail){
+         $message = '<p class="notice">That email address already exists. Please enter different email address.</p>';
+         include '../view/client-update.php';
+         exit;
+        }
+      }
+       // Check for missing data
+       if (empty($clientFirstname) || empty($clientLastname) || empty($clientEmail)) {
+        $message = '<p id="warning">Please provide correct information for all form fields.</p>';
+        include '../view/client-update.php';
+        exit; 
+      }
+
+      // Send the data to the model
+      $updateOutcome = updateClient($clientFirstname, $clientLastname, $clientEmail, $clientId);
+
+      // Check and report the result
+      if($updateOutcome === 1){
+        $_SESSION['message'] = "<p id='success'>Hi $clientFirstname! Your information has been updated.<p>";
+        header('location: /phpmotors/accounts/');
+        $clientData = getClientId($clientId);
+        
+        // A valid user exists, log them in
+        $_SESSION['loggedin'] = TRUE;
+        //echo $clientFirstname;
+        // Remove the password from the array
+        // the array_pop function removes the last
+        // element from an array
+        array_pop($clientData);
+        // Store the array into the session
+        $_SESSION['clientData'] = $clientData;
+        $clientFirstname = $_SESSION['clientData']['clientFirstname'];
+        setcookie('firstname', $clientFirstname, strtotime('+1 year'), '/');
+        exit;
+
+      } else {
+        $message = "<p id='warning'>Sorry $clientFirstname, we could not update your account information. Please try again.</p>";
+        include '../view/client-update.php';
+        exit;
+      }
+    break;
+
+    case 'updatePassword':
+      $clientPassword = filter_input(INPUT_POST, 'clientPassword', FILTER_SANITIZE_STRING);
+      $clientId = filter_input(INPUT_POST, 'clientId', FILTER_SANITIZE_NUMBER_INT);
+      $checkPassword = checkPassword($clientPassword);
+
+      if (empty($checkPassword)) {
+        $message = '<p id="warning">Please provide a valid password.</p>';
+        include '../view/client-update.php';
+        exit;
+       }
+      
+
+      // Hash the checked password
+      $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
+
+      // Send the data to the model
+      $updateOutcome = updatePassword($hashedPassword, $clientId);
+
+      // Check and report the result
+      if($updateOutcome === 1){
+        $_SESSION['message'] = "<p id='success'>Your password has been updated.</p>";
+        header('Location: /phpmotors/accounts/');
+
+      exit;
+      } else {
+        $_SESSION['message'] = "<p id='warning'>Sorry $clientFirstname, we could not update your password. Please try again.</p>";
+        include '../view/admin.php';
+        exit;
+      }
+    break;  
+
     default:
       include '../view/admin.php';
     break;

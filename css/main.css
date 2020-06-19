@@ -83,6 +83,11 @@ form, #notamember{
     padding-left: 15px;
 }
 
+#success{
+    color: green;
+    padding-left: 15px;
+}
+
 .paddingleftright{
     padding: 0% 15px;
 }
