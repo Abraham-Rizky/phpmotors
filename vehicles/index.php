@@ -214,6 +214,19 @@ switch ($action){
     }
   break;
 
+  case 'classification':
+    $classificationName = filter_input(INPUT_GET, 'classificationName', FILTER_SANITIZE_STRING);
+    $vehicles = getVehiclesByClassification($classificationName);
+    if(!count($vehicles)){
+     $message = "<p class='notice'>Sorry, no $classificationName could be found.</p>";
+    } else {
+     $vehicleDisplay = buildVehiclesDisplay($vehicles);
+    }
+    include '../view/classification.php';
+    // echo $vehicleDisplay;
+    // exit;
+  break;
+
   default:
     $classificationList = buildClassificationList($classifications);
     include '../view/vehicle-management.php';
