@@ -146,5 +146,26 @@ function getVehiclesByClassification($classificationName){
     $vehicles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $stmt->closeCursor();
     return $vehicles;
-   }
+}
+
+function getCarsInfo($invId){
+    $db = phpmotorsConnect();
+    $sql = 'SELECT * FROM inventory WHERE invId = :invId';
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(':invId', $invId, PDO::PARAM_STR);
+    $stmt->execute();
+    $cars = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $cars;
+}
+
+function getVehicles() {
+    $db = phpmotorsConnect();
+    $sql = 'SELECT invMake, invModel, invId FROM inventory ORDER BY invMake ASC';
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    return $products;
+}
 ?>

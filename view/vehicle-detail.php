@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title><?php echo $classificationName; ?> vehicles | PHP Motors, Inc.</title>
+        <title><?php echo $cars['invMake'] ." ". $cars['invModel']?> | PHP Motors, Inc.</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/phpmotors/css/normalize.css" media="screen">
@@ -18,12 +18,12 @@
         </nav>
         <main>
             <section class="paddingleftright">
-                <h1><?php echo $classificationName; ?> vehicles</h1>
+                <h1><?php echo $cars['invMake'] ." ". $cars['invModel']?></h1>
                 <?php if(isset($message)){
                     echo $message; }
                 ?>
-                <?php if(isset($vehicleDisplay)){
-                    echo $vehicleDisplay;} 
+                <?php if(isset($carDisplay)){
+                    echo $carDisplay;} 
                 ?>
             </section>
         </main>

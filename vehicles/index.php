@@ -21,25 +21,6 @@ $navList = buildNavigation($classifications);
 // var_dump($classifications);
 // 	exit;
 
-// Build a navigation bar using the $classifications array
-// $navList = '<ul>';
-// $navList .= "<li><a href='/phpmotors/index.php' title='View the PHP Motors home page'>Home</a></li>";
-// foreach ($classifications as $classification) {
-//  $navList .= "<li><a href='/phpmotors/index.php?action=".urlencode($classification['classificationName'])."' title='View our $classification[classificationName] product line'>$classification[classificationName]</a></li>";
-// }
-// $navList .= '</ul>';
-
-//Build a dropdown menu
-// $dropdown = '<select name="classificationId" id="classificationId">';
-// $dropdown .= "<option value='' disabled hidden selected>Choose Car Classification</option>";
-// foreach ($classifications as $classification) {
-// $dropdown .= "<option value='".urlencode($classification['classificationId'])."'>$classification[classificationName]</option>";
-// }
-// $dropdown .= '</select>';
-
-// echo $navList;
-// exit;
-
 $action = filter_input(INPUT_POST, 'action');
  if ($action == NULL){
   $action = filter_input(INPUT_GET, 'action');
@@ -226,6 +207,18 @@ switch ($action){
     // echo $vehicleDisplay;
     // exit;
   break;
+
+  case 'detail':
+    $invId = filter_input(INPUT_GET, 'invId', FILTER_SANITIZE_NUMBER_INT);
+    $cars = getCarsInfo($invId);
+    // $invMake = $cars['invMake'];
+    if(!count($cars)){
+        $message = "<p class='notice'>Sorry, $invId  could not be found.</p>";
+    } else {
+      $carDisplay = buildCarsDisplay($cars);
+    }
+    include '../view/vehicle-detail.php';
+    break;  
 
   default:
     $classificationList = buildClassificationList($classifications);

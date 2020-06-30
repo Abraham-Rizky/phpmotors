@@ -63,9 +63,9 @@ if ($_SESSION['clientData']['clientLevel'] < 2) {
                     <label for="invDescription">Description</label>
                     <textarea type="text" name="invDescription" id="invDescription" placeholder="Enter description" autocomplete="off" required><?php if(isset($invDescription)){echo "$invDescription";} ?></textarea>
                     <label for="invImage">Image path</label>
-                    <input type="text" name="invImage" id="invImage" placeholder="Enter image path" autocomplete="off" value="/phpmotors/images/no-image.png" required>
+                    <input type="text" name="invImage" id="invImage" placeholder="Enter image path" autocomplete="off" value="/phpmotors/images/vehicles/no-image.png" required>
                     <label for="invThumbnail">Thumbnail path</label>
-                    <input type="text" name="invThumbnail" id="invThumbnail" placeholder="Enter thumbnail path" autocomplete="off" value="/phpmotors/images/no-image.png" required>
+                    <input type="text" name="invThumbnail" id="invThumbnail" placeholder="Enter thumbnail path" autocomplete="off" value="/phpmotors/images/vehicles/no-image.png" required>
                     <label for="invPrice">Price</label>
                     <input type="number" step="0.01" name="invPrice" id="invPrice" placeholder="Enter car's price" autocomplete="off" <?php if(isset($invPrice)){echo "value='$invPrice'";} ?> required>
                     <label for="invStock"># in stock</label>
